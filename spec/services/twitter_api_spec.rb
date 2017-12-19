@@ -1,3 +1,4 @@
+# require 'rails_helper'
 require './app/services/twitter_api'
 
 describe TwitterApi do
