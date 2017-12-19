@@ -1,28 +1,63 @@
-== README
+# This repo is to replicate the issue documented at:
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### [twitter-text #221](https://github.com/twitter/twitter-text/issues/221)
 
-Things you may want to cover:
+There are two files located at:
 
-* Ruby version
+1. app/services/twitter_api.rb
+2. spec/services/twitter_api_spec.rb
 
-* System dependencies
+clone repo
+bundle install
 
-* Configuration
+run rspec test with:
 
-* Database creation
+```
+bundle exec rspec spec/services/twitter_api_spec.rb
+```
 
-* Database initialization
+should receive error
 
-* How to run the test suite
+```
+Failures:
 
-* Services (job queues, cache servers, search engines, etc.)
+  1) TwitterApi Posting to twitter should be able to post 280 chars or less to twitter
+     Failure/Error: result = parse_tweet(tweet)
 
-* Deployment instructions
+     NoMethodError:
+       undefined method `[]' for nil:NilClass
+     # ./app/services/twitter_api.rb:11:in `post_to_twitter'
+     # ./spec/services/twitter_api_spec.rb:10:in `block (3 levels) in <top (required)>'
+```
 
-* ...
+Found fix by requiring absolute path instead of using rails_helper
+
+inside the spec/services/twitter_api_spec.rb
+
+comment out the rails_helper & uncomment the absolute path:
+
+```
+#require 'rails_helper'
+require './app/services/twitter_api'
+
+describe TwitterApi do
+```
+
+run tests:
+
+```
+bundle exec rspec spec/services/twitter_api_spec.rb
+```
+
+And tests now pass
+
+```
+.
+
+Finished in 0.00437 seconds (files took 0.30772 seconds to load)
+1 example, 0 failures
+```
+
+I'm not familiar with how rails_helper works... Perhaps @tanasku will have answers.
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
