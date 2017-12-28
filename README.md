@@ -57,7 +57,7 @@ And tests now pass
 Finished in 0.00437 seconds (files took 0.30772 seconds to load)
 1 example, 0 failures
 ```
-
-I'm not familiar with how rails_helper works... Perhaps @tanasku will have answers.
+Update:
+This was a namespace conflict introduced in the twitter-text gem version 2.0 and was fixed in version 2.1.0 
 
 
